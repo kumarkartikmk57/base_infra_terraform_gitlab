@@ -1,2 +1,2 @@
 connectorname = "uat-connector"
-region = "europe-west4"
+region = "europe-west1"
