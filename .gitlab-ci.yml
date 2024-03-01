@@ -1,0 +1,33 @@
+include:
+ - local: 'gitlab-template/terraform.gitlab-ci.yml'
+
+stages:
+ - plan
+ - apply
+
+
+before_script:
+  - echo $deployer > /tmp/gcp_credentials.json
+  - export GOOGLE_APPLICATION_CREDENTIALS="/tmp/gcp_credentials.json"
+  - apt-get update -qy
+  - apt-get install -y unzip
+  - curl -sSL https://releases.hashicorp.com/terraform/1.7.4/terraform_1.7.4_linux_amd64.zip -o /tmp/terraform.zip
+  - unzip /tmp/terraform.zip -d /usr/local/bin/
+  - chmod +x /usr/local/bin/terraform
+  - cd terraform
+
+
+# variables:
+#   GOOGLE_APPLICATION_CREDENTIALS = /tmp/key.json
+
+
+
+terraform_staging:
+ stage: plan
+ extends:
+  - .plan
+
+terraform_implementation:
+ stage: apply
+ extends:
+  - .terra_apply

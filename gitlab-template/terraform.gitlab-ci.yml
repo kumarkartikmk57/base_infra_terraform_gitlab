@@ -1,0 +1,22 @@
+stages:
+ - init
+ - plan
+ - apply
+
+
+.initialize:
+ stage: init
+ script:
+  - terraform init
+
+.plan:
+ stage: plan
+ script:
+  - terraform init
+  - terraform plan --var-file=uat.tfvars
+
+.terra_apply:
+ stage: apply
+ script:
+  - terraform init
+  - terraform apply --var-file=uat.tfvars -auto-approve
